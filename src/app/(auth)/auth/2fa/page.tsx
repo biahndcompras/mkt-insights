@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { rutaSegura } from "@/lib/auth/reglas";
 import { createClient } from "@/lib/supabase/server";
+import { BotonEnviar } from "@/components/espera";
 import { salir } from "../../acciones";
 import { Configurar2fa, Verificar2fa } from "../../formularios";
 import { Titulo } from "../../titulo";
@@ -21,7 +22,7 @@ export default async function DosPasos(props: PageProps<"/auth/2fa">) {
       </Titulo>
       {configurado ? <Verificar2fa siguiente={siguiente} /> : <Configurar2fa siguiente={siguiente} />}
       <form action={salir} className="mt-4 text-center">
-        <button type="submit" className="text-xs text-neutral-600 underline-offset-4 hover:underline">Salir</button>
+        <BotonEnviar pendiente="Saliendo…" className="text-xs text-neutral-600 underline-offset-4 hover:underline">Salir</BotonEnviar>
       </form>
     </>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AvisoEnlace } from "@/components/espera";
 import { Suspense } from "react";
 import { AcumuladoKpis, PuenteProductos, RutasAtipicasTabla } from "@/components/dashboard/analisis";
 import { CanalChart } from "@/components/dashboard/canal-chart";
@@ -84,7 +85,7 @@ export default async function Inicio(props: PageProps<"/">) {
           <p className="mt-1 max-w-prose">
             {capital(periodoLargo(cmp))} no tiene datos en esta versión (la historia empieza en {periodoLargo(meta.periodos[0])}), así que no se muestran la variación
             por canal, las rutas que más contribuyen ni el puente de precio, volumen y mezcla.
-            {alternativa && <> <Link href={`/?${queryString({ ...estado, comparar: estado.comparar === "anio" ? "anterior" : "anio" })}`} className="font-medium underline underline-offset-2">Comparar con {periodoLargo(alternativa)}</Link>.</>}
+            {alternativa && <> <Link href={`/?${queryString({ ...estado, comparar: estado.comparar === "anio" ? "anterior" : "anio" })}`} className="font-medium underline underline-offset-2">Comparar con {periodoLargo(alternativa)}<AvisoEnlace /></Link>.</>}
           </p>
         </section>
       )}

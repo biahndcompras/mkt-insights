@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AvisoEnlace } from "@/components/espera";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requerirPlus } from "@/lib/auth/acceso";
 import { advertencias, leerParams, periodoComparado, queryString, type EstadoDashboard } from "@/lib/dashboard/params";
@@ -108,6 +109,7 @@ function Tarjeta({ estado, resumen, activo, href, contra, explicacion }: {
       <div className={`text-sm ${estado === "perdidos" || estado === "en_riesgo" ? "text-red-700" : "text-neutral-500"}`}>{ESTADOS_CLIENTE[estado].titulo}</div>
       <div className="mt-1 text-2xl font-semibold tabular-nums">{conteo(t.clientes)}</div>
       <div className="mt-1 text-xs text-neutral-500 tabular-nums">{detalle}</div>
+      <AvisoEnlace />
     </Link>
   );
 }
@@ -152,8 +154,8 @@ function Paginas({ total, pagina, href }: { total: number; pagina: number; href:
     <div className="mt-3 flex items-center justify-between text-xs text-neutral-600 tabular-nums">
       <span>{desde <= total ? `Clientes ${conteo(desde)}–${conteo(hasta)} de ${conteo(total)}` : `Página fuera de rango (hay ${paginas})`}</span>
       <div className="flex gap-4">
-        {pagina > 1 && <Link href={href(Math.min(pagina - 1, paginas))} scroll={false} className="underline">Anteriores</Link>}
-        {pagina < paginas && <Link href={href(pagina + 1)} scroll={false} className="underline">Siguientes</Link>}
+        {pagina > 1 && <Link href={href(Math.min(pagina - 1, paginas))} scroll={false} className="underline">Anteriores<AvisoEnlace /></Link>}
+        {pagina < paginas && <Link href={href(pagina + 1)} scroll={false} className="underline">Siguientes<AvisoEnlace /></Link>}
       </div>
     </div>
   );
@@ -181,7 +183,7 @@ function PorRuta({ filas, estado, ver, periodo, cmp }: { filas: ResumenClientes[
           {filas.map((r) => (
             <TableRow key={r.ruta}>
               <TableCell className="max-w-72 truncate" title={r.ruta}>
-                {estado.filtros.ruta ? r.ruta : <Link href={filtrar(r.ruta)} className="hover:underline">{r.ruta}</Link>}
+                {estado.filtros.ruta ? r.ruta : <Link href={filtrar(r.ruta)} className="hover:underline">{r.ruta}<AvisoEnlace /></Link>}
               </TableCell>
               <TableCell className="text-right">{conteo(r.activos)}</TableCell>
               <TableCell className="text-right">{conteo(r.nuevos)}</TableCell>

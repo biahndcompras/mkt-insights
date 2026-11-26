@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AvisoEnlace } from "@/components/espera";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requerirGestorCargas } from "@/lib/auth/acceso";
@@ -77,7 +78,7 @@ export default async function Homologacion(props: PageProps<"/cargas/homologacio
                           Ya se homologa a {p.homologado_a}. Este mes publicado cambia solo al volver a subirlo y publicarlo.
                         </span>
                       ) : (
-                        <Link href={enlace(p.canal_origen)} className="underline">Homologar</Link>
+                        <Link href={enlace(p.canal_origen)} className="underline">Homologar<AvisoEnlace /></Link>
                       )}
                     </TableCell>
                   </TableRow>
@@ -117,7 +118,7 @@ export default async function Homologacion(props: PageProps<"/cargas/homologacio
                   </TableCell>
                   <TableCell>
                     <div className="flex items-start gap-2">
-                      <Link href={enlace(h.valor_origen)} className="inline-flex h-6 items-center border border-neutral-200 px-2 text-xs hover:bg-neutral-50">Cambiar</Link>
+                      <Link href={enlace(h.valor_origen)} className="inline-flex h-6 items-center border border-neutral-200 px-2 text-xs hover:bg-neutral-50">Cambiar<AvisoEnlace /></Link>
                       <QuitarHomologacion origen={h.valor_origen} canal={h.valor_homologado} />
                     </div>
                   </TableCell>

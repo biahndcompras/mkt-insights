@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { useAvisarEspera } from "@/components/espera";
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { queryString, type EstadoDashboard } from "@/lib/dashboard/params";
@@ -23,6 +24,7 @@ export function FiltrosClientes({ estado, ver, periodos, opciones }: {
 }) {
   const router = useRouter();
   const [pendiente, startTransition] = useTransition();
+  useAvisarEspera(pendiente);
   const ir = (e: EstadoDashboard) => startTransition(() => router.push(`/clientes?${queryString(e)}&ver=${ver}`, { scroll: false }));
   const filtro = (campo: keyof FiltrosT, v: string | null) => {
     const filtros = { ...estado.filtros };

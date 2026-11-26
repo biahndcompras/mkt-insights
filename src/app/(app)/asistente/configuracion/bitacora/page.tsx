@@ -1,4 +1,6 @@
+import Form from "next/form";
 import Link from "next/link";
+import { AvisoEnlace, BotonEnviar } from "@/components/espera";
 import { requerirAdmin } from "@/lib/auth/acceso";
 import { DIAS, ESTADOS, FiltroBitacora, leerBitacora, personasConPreguntas, type Estado } from "@/lib/asistente/bitacora-servidor";
 import { usd } from "@/lib/asistente/dinero";
@@ -49,7 +51,7 @@ export default async function Bitacora(props: PageProps<"/asistente/configuracio
           <Pastilla activa={f.valoracion === "negativa"} href={enlace({ valoracion: "negativa" })}>Con 👎</Pastilla>
           <Pastilla activa={f.valoracion === "positiva"} href={enlace({ valoracion: "positiva" })}>Con 👍</Pastilla>
         </Filtro>
-        <form className="flex items-center gap-2" action="/asistente/configuracion/bitacora">
+        <Form className="flex items-center gap-2" action="/asistente/configuracion/bitacora">
           <input type="hidden" name="dias" value={f.dias} />
           {f.estado && <input type="hidden" name="estado" value={f.estado} />}
           {f.valoracion && <input type="hidden" name="valoracion" value={f.valoracion} />}
@@ -58,8 +60,8 @@ export default async function Bitacora(props: PageProps<"/asistente/configuracio
             <option value="">Todas</option>
             {personas.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
           </select>
-          <button type="submit" className="h-8 rounded-md border border-neutral-200 bg-white px-3 text-xs font-medium hover:bg-neutral-100">Filtrar</button>
-        </form>
+          <BotonEnviar pendiente="Filtrando…" className="h-8 rounded-md border border-neutral-200 bg-white px-3 text-xs font-medium hover:bg-neutral-100">Filtrar</BotonEnviar>
+        </Form>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -178,7 +180,7 @@ function Pastilla({ activa, href, children }: { activa: boolean; href: string; c
   return (
     <Link href={href} aria-current={activa ? "page" : undefined}
       className={`rounded-full border px-3 py-1 text-xs font-medium ${activa ? "border-neutral-900 bg-neutral-900 text-white" : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-100"}`}>
-      {children}
+      {children}<AvisoEnlace />
     </Link>
   );
 }

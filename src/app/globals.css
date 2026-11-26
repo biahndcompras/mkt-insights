@@ -134,3 +134,10 @@
     outline-offset: 2px;
   }
 }
+/* Señal de espera al cambiar filtros o paginar (components/espera.tsx). */
+@keyframes espera-aparecer { from { opacity: 0; } to { opacity: 1; } }
+@keyframes espera-barra { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.espera-aparecer { animation: espera-aparecer 150ms linear 120ms both; }
+.espera-barra { animation: espera-barra 1.1s ease-in-out infinite; }
+.espera-contenido { opacity: 0.55; transition: opacity 150ms linear 120ms; }
+@media (prefers-reduced-motion: reduce) { .espera-barra { animation: none; width: 100%; } }
