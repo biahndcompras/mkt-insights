@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { queryString, type EstadoDashboard } from "@/lib/dashboard/params";
 import { capital, periodoCorto } from "@/lib/format";
 import type { Filtros as FiltrosT, PeriodoMeta } from "@/lib/semantic/contracts";
+import { useAvisarEspera } from "@/components/espera";
 import { Vistas } from "./vistas";
 
 type Opcion = { value: string; label: string };
@@ -18,6 +19,7 @@ export function Filtros({ estado, periodos, opciones }: {
 }) {
   const router = useRouter();
   const [pendiente, startTransition] = useTransition();
+  useAvisarEspera(pendiente);
   const ir = (e: EstadoDashboard) => startTransition(() => router.push(`/?${queryString(e)}`, { scroll: false }));
   const filtro = (campo: keyof FiltrosT, v: string | null) => {
     const filtros = { ...estado.filtros };

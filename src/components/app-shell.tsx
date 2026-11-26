@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { salir } from "@/app/(auth)/acciones";
+import { BarraEspera, BotonEnviar, useEspera } from "@/components/espera";
 import { NIVEL_TXT, type Usuario } from "@/lib/auth/reglas";
 
 type ItemNav = { href: string; label: string; soloAdmin?: boolean; soloPlus?: boolean };
@@ -24,6 +25,7 @@ const NAV: ItemNav[] = [
  */
 export function AppShell({ children, version, usuario }: { children: React.ReactNode; version: React.ReactNode; usuario: Usuario }) {
   const path = usePathname();
+  const esperando = useEspera();
   // El menú queda abierto solo en la ruta donde se abrió: al navegar se cierra solo.
   const [menuEn, setMenuEn] = useState<string | null>(null);
   const menu = menuEn === path;
@@ -61,6 +63,7 @@ export function AppShell({ children, version, usuario }: { children: React.React
 
   return (
     <div className="flex min-h-screen">
+      <BarraEspera />
       <aside className="hidden w-60 shrink-0 border-r border-neutral-200 bg-white p-4 md:block">{lateral}</aside>
       {menu && (
         <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="Menú">
@@ -94,11 +97,11 @@ export function AppShell({ children, version, usuario }: { children: React.React
               {usuario.esAdmin && " · admin"}
             </span>
             <form action={salir}>
-              <button type="submit" className="text-xs underline-offset-4 hover:underline">Salir</button>
+              <BotonEnviar pendiente="Saliendo…" className="text-xs underline-offset-4 hover:underline">Salir</BotonEnviar>
             </form>
           </div>
         </header>
-        <main className="p-4 md:p-6">{children}</main>
+        <main className={`p-4 md:p-6 ${esperando ? "espera-contenido" : ""}`} aria-busy={esperando}>{children}</main>
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
+import Form from "next/form";
 import Link from "next/link";
+import { BotonEnviar } from "@/components/espera";
 import { requerirAcceso } from "@/lib/auth/acceso";
 import { pctTexto, rutaResumen, datosResumen, type Explicacion, type Indicador } from "@/lib/cargas/resumen";
 import { fuenteResumen, versiones } from "@/lib/cargas/servidor";
@@ -39,7 +41,7 @@ export default async function Resumen(props: PageProps<"/resumen">) {
         }
       `}</style>
 
-      <form method="get" action="/resumen" className="resumen-no-imprimir flex flex-wrap items-end gap-3 border border-neutral-200 bg-white p-3 text-sm">
+      <Form action="/resumen" className="resumen-no-imprimir flex flex-wrap items-end gap-3 border border-neutral-200 bg-white p-3 text-sm">
         <label className="space-y-1">
           <span className="block text-xs text-neutral-500">Versión</span>
           <select name="version" defaultValue={v.version} className="block h-9 border border-input bg-background px-2 text-sm">
@@ -57,9 +59,9 @@ export default async function Resumen(props: PageProps<"/resumen">) {
             })}
           </select>
         </label>
-        <button type="submit" className="h-9 border border-neutral-300 px-3 text-sm hover:bg-neutral-50">Ver</button>
+        <BotonEnviar pendiente="Cargando…" className="h-9 border border-neutral-300 px-3 text-sm hover:bg-neutral-50">Ver</BotonEnviar>
         <div className="ml-auto"><BotonImprimir /></div>
-      </form>
+      </Form>
 
       <div className="space-y-1">
         <div className="text-xs tracking-wide text-neutral-500 uppercase">BIA Foresight · Resumen ejecutivo</div>
